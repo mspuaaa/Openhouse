@@ -33,15 +33,15 @@
         .bg-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(3px);
             z-index: -1;
         }
 
         #header {
             width: 100%;
-            padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(10px); 
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             display: flex;
@@ -71,7 +71,7 @@
             justify-content: center;
             flex-grow: 1;
             width: 100%;
-            max-width: 650px;
+            max-width: 800px;
             padding: 10px;
             box-sizing: border-box;
             text-align: center;
@@ -87,16 +87,16 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1 { font-size: 2.2rem; margin-bottom: 5px; color: #0A437A; font-weight: bold; }
-        h2 { color: #0A437A; margin-top: 0; font-size: 1.8rem; }
-        p { font-size: 1.1rem; line-height: 1.5; margin-bottom: 15px; color: #2c3e50; font-weight: bold; }
+        h1 { font-size: 2rem; margin-bottom: 5px; color: #0A437A; font-weight: bold; }
+        h2 { color: #0A437A; margin-top: 0; font-size: 1.6rem; margin-bottom: 10px; }
+        p { font-size: 1rem; line-height: 1.4; margin-bottom: 10px; color: #2c3e50; font-weight: bold; }
 
         button {
             background-color: var(--btn-color);
             color: #fff;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.3rem;
+            padding: 12px 30px;
+            font-size: 1.2rem;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
@@ -113,19 +113,20 @@
         }
 
         .hero-logo {
-            width: 90%;
-            max-width: 400px;
+            width: 85%;
+            max-width: 350px;
             border-radius: 20px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
-        /* The Custom Frame Background */
+        /* --- THE NEW FRAME LAYOUT --- */
         .game-container {
             width: 100%;
-            max-width: 600px;
-            height: 550px;
-            background-image: url('frame.jpg');
+            max-width: 750px; /* Made the frame bigger */
+            height: 600px; 
+            /* Looks for the transparent PNG version of your frame */
+            background-image: url('frame.png'); 
             background-size: 100% 100%;
             background-repeat: no-repeat;
             background-position: center;
@@ -134,10 +135,16 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            padding: 15% 10% 20% 10%; /* Keeps content inside the blank frame area */
+            background-color: transparent; 
+            border: none;
+            box-shadow: none;
+        }
+
+        /* Padding specifically for the Intro text to stay inside the frame window */
+        .intro-text-area {
+            padding: 18% 12% 10% 12%; 
             box-sizing: border-box;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            border-radius: 20px;
+            text-align: center;
         }
 
         #game1-play-area {
@@ -147,62 +154,72 @@
             position: relative;
         }
 
-        .game-stats-bar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
+        /* Absolute positioning for the stats inside the frame's drawing */
+        #g1-timer-display {
+            position: absolute;
+            top: 22%; /* Fits perfectly in the top left cloud */
+            left: 15%;
+            font-size: 1.4rem;
             font-weight: bold;
             color: #0A437A;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            background: rgba(255,255,255,0.7);
-            padding: 5px 10px;
-            border-radius: 10px;
+            z-index: 5;
         }
 
+        #g1-score-display {
+            position: absolute;
+            top: 22%; /* Fits perfectly in the top right logo/cloud */
+            right: 15%;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #0A437A;
+            z-index: 5;
+        }
+
+        /* Target Word perfectly aligned inside the bottom ribbon */
         .target-word-display {
             position: absolute;
-            bottom: 0px;
+            bottom: 8.5%; 
+            left: 0;
             width: 100%;
             text-align: center;
             font-size: 2.8rem;
             font-weight: bold;
             color: #0A437A;
-            background: rgba(255,255,255,0.8);
-            padding: 5px 0;
-            border-radius: 15px;
             pointer-events: none;
+            z-index: 5;
         }
 
         .falling-char {
             position: absolute;
             top: -80px;
-            width: 70px;
-            height: 70px;
+            width: 75px; 
+            height: 75px;
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: bold;
             color: #2c3e50;
             cursor: pointer;
             user-select: none;
             animation: fall 4.5s linear forwards;
+            background-color: transparent; /* Ensures no white box around PNGs */
         }
 
         @keyframes fall {
-            0% { top: -80px; }
-            100% { top: 500px; }
+            0% { top: 15%; } /* Starts dropping just below the top border */
+            100% { top: 80%; } /* Disappears before hitting the ribbon */
         }
 
         .feedback-pop {
             position: absolute;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             pointer-events: none;
+            z-index: 10;
             animation: popUp 1s ease-out forwards;
         }
         @keyframes popUp {
@@ -225,51 +242,33 @@
     <!-- MAIN MENU -->
     <div id="menu-screen" class="screen active">
         <img src="logo.jpg" alt="Commonwealth Sec Chinese" class="hero-logo">
-        <h1>挑战开始！</h1>
-        <p>Step through the gates of Commonwealth and let the stars light your way! Three enchanted mini-games await, each one a chance to polish your Chinese vocabulary and uncover new words. Gather points as you go, and see how brightly you can shine.</p>
-        <p>踏入立才的星空之门，一场汉字奇妙之旅即将展开！三个魔法小游戏正等着你，在欢笑与挑战中温故知新，发现更多词语的美。一路集星赚分，看看你能闪耀多亮！</p>
-        <button onclick="startRound(1)">踏上星途 (Begin the Journey)</button>
+        
+        <div class="game-container" style="height: auto; min-height: 400px; padding: 10% 12%;">
+            <p>Step through the gates of Commonwealth and let the stars light your way! Three enchanted mini-games await, each one a chance to polish your Chinese vocabulary and uncover new words. Gather points as you go, and see how brightly you can shine.</p>
+            <p>踏入立才的星空之门，一场汉字奇妙之旅即将展开！三个魔法小游戏正等着你，在欢笑与挑战中温故知新，发现更多词语的美。一路集星赚分，看看你能闪耀多亮！</p>
+            <button onclick="startRound(1)">踏上星途 (Begin the Journey)</button>
+        </div>
     </div>
 
     <!-- ROUND 1: FALLING WORDS -->
     <div id="round1-screen" class="screen">
         <div class="game-container" id="game1-area">
             
-            <div id="game1-intro" style="text-align: center;">
+            <div id="game1-intro" class="intro-text-area">
                 <h2>第一关: 汉字保卫战</h2>
-                <p style="font-size: 0.95rem;">Words are drifting down like falling stars, and only you can finish them! Catch the bubble holding the right character before it touches the ground and the word shines whole again. Stay sharp, because a few cheeky decoys are hiding among the true ones.<br><br>Time limit: 45 seconds of starlight. Make every moment count!</p>
-                <p style="font-size: 0.95rem;">词语如流星般坠落，唯有你能让它们完整！在气泡落地之前，接住藏着正确汉字的那一个，词语便会重焕光彩。但要当心，混在其中的还有几个调皮的假字，保持警觉，别被它们骗了！<br><br>时限：45 秒星光倒计时，分秒必争！</p>
+                <p>Words are drifting down like falling stars, and only you can finish them! Catch the bubble holding the right character before it touches the ground and the word shines whole again. Stay sharp, because a few cheeky decoys are hiding among the true ones.</p>
+                <p style="color: var(--accent-red);">Time limit: 45 seconds of starlight. Make every moment count!</p>
+                <p>词语如流星般坠落，唯有你能让它们完整！在气泡落地之前，接住藏着正确汉字的那一个，词语便会重焕光彩。但要当心，混在其中的还有几个调皮的假字，保持警觉，别被它们骗了！</p>
+                <p style="color: var(--accent-red);">时限：45 秒星光倒计时，分秒必争！</p>
                 <button onclick="initGame1()">出发！(Let's Go!)</button>
             </div>
 
+            <!-- Game Play Area with perfectly aligned UI -->
             <div id="game1-play-area">
-                <div class="game-stats-bar">
-                    <div>⏱️ <span id="g1-timer">45</span>s</div>
-                    <div>得分: <span id="g1-score">0</span></div>
-                </div>
+                <div id="g1-timer-display">⏱️ <span id="g1-timer">45</span>s</div>
+                <div id="g1-score-display">得分: <span id="g1-score">0</span></div>
+                
                 <div class="target-word-display" id="g1-target-word">准备...</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ROUND 2: SNAKE (Placeholder) -->
-    <div id="round2-screen" class="screen">
-        <div class="game-container">
-             <div style="text-align: center;">
-                <h2>第二关: 贪吃蛇</h2>
-                <p>Eat the right character to form the idiom! (Time: 60s)</p>
-                <button onclick="endRound(2, 200)">Simulate R2 Win (+200 pts)</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ROUND 3: MEMORY (Placeholder) -->
-    <div id="round3-screen" class="screen">
-        <div class="game-container">
-            <div style="text-align: center;">
-                <h2>第三关: 记忆大考验</h2>
-                <p>Match the cards and read the sentences carefully!</p>
-                <button onclick="finishGame(300)">Simulate R3 Win (+300 pts)</button>
             </div>
         </div>
     </div>
@@ -286,7 +285,6 @@
     </div>
 
     <script>
-        // High Score Initialization
         let totalScore = 0;
         let highestScore = localStorage.getItem('cwssHighScore') || 0;
         document.getElementById('highest-score').innerText = highestScore;
@@ -315,7 +313,9 @@
             totalScore += pointsEarned;
             updateScoreBoard();
             if(currentRound === 1) clearInterval(g1SpawnInterval);
-            startRound(currentRound + 1);
+            
+            // Temporary skip to end screen until R2 is built
+            finishGame(0);
         }
 
         function finishGame(pointsEarned) {
@@ -326,10 +326,9 @@
         }
 
         // ==========================================
-        // ROUND 1: FALLING WORDS ENGINE (Custom Assets + 4 Options)
+        // ROUND 1: FALLING WORDS ENGINE 
         // ==========================================
         
-        // 30 Hand-picked idioms from your categories with 3 decoys each
         const g1VocabBank = [
             { part1: "风和日", part2: "", answer: "丽", options: ["丽", "厉", "历", "莉"] },
             { part1: "倾盆大", part2: "", answer: "雨", options: ["雨", "语", "羽", "宇"] },
@@ -363,8 +362,8 @@
             { part1: "满载而", part2: "", answer: "归", options: ["归", "龟", "规", "轨"] }
         ];
 
-        // The 4 new bubble background assets
-        const bubbleAssets = ['url("cloud.jpg")', 'url("flame.jpg")', 'url("moon.jpg")', 'url("star.jpg")'];
+        // Looks for the newly named PNG files for transparency
+        const bubbleAssets = ['url("cloud.png")', 'url("flame.png")', 'url("moon.png")', 'url("star.png")'];
 
         let g1AvailableQuestions = [];
         let g1Time = 45;
@@ -410,11 +409,10 @@
 
             let spawnIndex = 0;
             let shuffledOptions = [...g1CurrentQuestion.options].sort(() => Math.random() - 0.5);
-            // Shuffle the visual assets so the correct answer isn't always the same shape
             let shuffledAssets = [...bubbleAssets].sort(() => Math.random() - 0.5); 
 
             g1SpawnInterval = setInterval(() => {
-                if(spawnIndex < 4) { // Now spawns all 4 options
+                if(spawnIndex < 4) { 
                     spawnBubble(shuffledOptions[spawnIndex], shuffledAssets[spawnIndex]);
                     spawnIndex++;
                 } else {
@@ -435,7 +433,7 @@
             bubble.innerText = character;
             bubble.style.backgroundImage = bgAsset;
             
-            let randomX = Math.floor(Math.random() * 70) + 10;
+            let randomX = Math.floor(Math.random() * 70) + 15;
             bubble.style.left = `${randomX}%`;
 
             bubble.addEventListener('mousedown', function() { handleTap(this, character); });
