@@ -7,7 +7,6 @@
     <style>
         :root {
             --text-dark: #2c3e50; 
-            --white: rgba(255, 255, 255, 0.85); 
             --btn-color: #F6C555; 
             --btn-hover: #E3A72F;
             --accent-red: #D9534F; 
@@ -55,12 +54,14 @@
         }
 
         .score-board {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             background: var(--btn-color);
             padding: 5px 15px;
             border-radius: 20px;
             color: #fff;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            display: flex;
+            gap: 15px;
         }
 
         .screen {
@@ -71,7 +72,7 @@
             flex-grow: 1;
             width: 100%;
             max-width: 650px;
-            padding: 20px;
+            padding: 10px;
             box-sizing: border-box;
             text-align: center;
         }
@@ -86,9 +87,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1 { font-size: 2.5rem; margin-bottom: 10px; color: #0A437A; font-weight: bold; }
-        h2 { color: #0A437A; margin-top: 0; }
-        p { font-size: 1.2rem; line-height: 1.6; margin-bottom: 20px; color: #2c3e50; font-weight: bold; }
+        h1 { font-size: 2.2rem; margin-bottom: 5px; color: #0A437A; font-weight: bold; }
+        h2 { color: #0A437A; margin-top: 0; font-size: 1.8rem; }
+        p { font-size: 1.1rem; line-height: 1.5; margin-bottom: 15px; color: #2c3e50; font-weight: bold; }
 
         button {
             background-color: var(--btn-color);
@@ -101,7 +102,7 @@
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-            margin: 10px;
+            margin: 5px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
             font-family: Arial, "KaiTi", "楷体", STKaiti, serif;
         }
@@ -109,31 +110,34 @@
         button:hover {
             transform: translateY(-3px);
             background-color: var(--btn-hover);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
         .hero-logo {
-            width: 100%;
-            max-width: 450px;
+            width: 90%;
+            max-width: 400px;
             border-radius: 20px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
+        /* The Custom Frame Background */
         .game-container {
             width: 100%;
-            height: 500px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            border: 2px solid rgba(255,255,255,0.6);
+            max-width: 600px;
+            height: 550px;
+            background-image: url('frame.jpg');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
             overflow: hidden;
-            padding: 0;
+            padding: 15% 10% 20% 10%; /* Keeps content inside the blank frame area */
+            box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 20px;
         }
 
         #game1-play-area {
@@ -145,51 +149,53 @@
 
         .game-stats-bar {
             width: 100%;
-            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
-            background: rgba(0,0,0,0.05);
-            box-sizing: border-box;
             font-weight: bold;
             color: #0A437A;
             font-size: 1.2rem;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.7);
+            padding: 5px 10px;
+            border-radius: 10px;
         }
 
         .target-word-display {
             position: absolute;
-            bottom: 20px;
+            bottom: 0px;
             width: 100%;
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: bold;
             color: #0A437A;
-            background: rgba(255,255,255,0.7);
-            padding: 10px 0;
+            background: rgba(255,255,255,0.8);
+            padding: 5px 0;
+            border-radius: 15px;
             pointer-events: none;
         }
 
         .falling-char {
             position: absolute;
-            top: -60px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #a0c4ff, #b9fbc0);
-            border-radius: 50%;
+            top: -80px;
+            width: 70px;
+            height: 70px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 2rem;
             font-weight: bold;
             color: #2c3e50;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             cursor: pointer;
             user-select: none;
-            animation: fall 4s linear forwards; /* Slightly sped up for excitement */
+            animation: fall 4.5s linear forwards;
         }
 
         @keyframes fall {
-            0% { top: -60px; }
-            100% { top: 550px; }
+            0% { top: -80px; }
+            100% { top: 500px; }
         }
 
         .feedback-pop {
@@ -210,26 +216,30 @@
 
     <div id="header">
         <div>✨ 欢迎来到立才中学 Commonwealth Secondary School!</div>
-        <div class="score-board">积分: <span id="total-score">0</span></div>
+        <div class="score-board">
+            <span>最高分 (Best): <span id="highest-score">0</span></span>
+            <span>当前积分: <span id="total-score">0</span></span>
+        </div>
     </div>
 
     <!-- MAIN MENU -->
     <div id="menu-screen" class="screen active">
         <img src="logo.jpg" alt="Commonwealth Sec Chinese" class="hero-logo">
         <h1>挑战开始！</h1>
-        <p>Complete 3 magical mini-games to test your Chinese vocabulary. <br>Earn points and learn new words!</p>
-        <button onclick="startRound(1)">进入第一关</button>
+        <p>Step through the gates of Commonwealth and let the stars light your way! Three enchanted mini-games await, each one a chance to polish your Chinese vocabulary and uncover new words. Gather points as you go, and see how brightly you can shine.</p>
+        <p>踏入立才的星空之门，一场汉字奇妙之旅即将展开！三个魔法小游戏正等着你，在欢笑与挑战中温故知新，发现更多词语的美。一路集星赚分，看看你能闪耀多亮！</p>
+        <button onclick="startRound(1)">踏上星途 (Begin the Journey)</button>
     </div>
 
     <!-- ROUND 1: FALLING WORDS -->
     <div id="round1-screen" class="screen">
         <div class="game-container" id="game1-area">
             
-            <div id="game1-intro" style="padding: 30px; text-align: center; margin-top: 50px;">
+            <div id="game1-intro" style="text-align: center;">
                 <h2>第一关: 汉字保卫战</h2>
-                <p>Catch the correct character bubble before it hits the ground to complete the word! Be careful of trick words.</p>
-                <p style="color: var(--accent-red);">Time limit: 45 seconds</p>
-                <button onclick="initGame1()">开始游戏 (Start)</button>
+                <p style="font-size: 0.95rem;">Words are drifting down like falling stars, and only you can finish them! Catch the bubble holding the right character before it touches the ground and the word shines whole again. Stay sharp, because a few cheeky decoys are hiding among the true ones.<br><br>Time limit: 45 seconds of starlight. Make every moment count!</p>
+                <p style="font-size: 0.95rem;">词语如流星般坠落，唯有你能让它们完整！在气泡落地之前，接住藏着正确汉字的那一个，词语便会重焕光彩。但要当心，混在其中的还有几个调皮的假字，保持警觉，别被它们骗了！<br><br>时限：45 秒星光倒计时，分秒必争！</p>
+                <button onclick="initGame1()">出发！(Let's Go!)</button>
             </div>
 
             <div id="game1-play-area">
@@ -245,7 +255,7 @@
     <!-- ROUND 2: SNAKE (Placeholder) -->
     <div id="round2-screen" class="screen">
         <div class="game-container">
-             <div style="padding: 30px; margin-top: 50px;">
+             <div style="text-align: center;">
                 <h2>第二关: 贪吃蛇</h2>
                 <p>Eat the right character to form the idiom! (Time: 60s)</p>
                 <button onclick="endRound(2, 200)">Simulate R2 Win (+200 pts)</button>
@@ -256,7 +266,7 @@
     <!-- ROUND 3: MEMORY (Placeholder) -->
     <div id="round3-screen" class="screen">
         <div class="game-container">
-            <div style="padding: 30px; margin-top: 50px;">
+            <div style="text-align: center;">
                 <h2>第三关: 记忆大考验</h2>
                 <p>Match the cards and read the sentences carefully!</p>
                 <button onclick="finishGame(300)">Simulate R3 Win (+300 pts)</button>
@@ -276,10 +286,18 @@
     </div>
 
     <script>
+        // High Score Initialization
         let totalScore = 0;
+        let highestScore = localStorage.getItem('cwssHighScore') || 0;
+        document.getElementById('highest-score').innerText = highestScore;
 
         function updateScoreBoard() {
             document.getElementById('total-score').innerText = totalScore;
+            if (totalScore > highestScore) {
+                highestScore = totalScore;
+                localStorage.setItem('cwssHighScore', highestScore);
+                document.getElementById('highest-score').innerText = highestScore;
+            }
         }
 
         function switchScreen(screenId) {
@@ -308,41 +326,45 @@
         }
 
         // ==========================================
-        // ROUND 1: FALLING WORDS ENGINE (Expanded Bank)
+        // ROUND 1: FALLING WORDS ENGINE (Custom Assets + 4 Options)
         // ==========================================
         
+        // 30 Hand-picked idioms from your categories with 3 decoys each
         const g1VocabBank = [
-            { part1: "兴高", part2: "烈", answer: "采", options: ["采", "彩", "菜"] },
-            { part1: "莫名其", part2: "", answer: "妙", options: ["妙", "庙", "秒"] },
-            { part1: "守株待", part2: "", answer: "兔", options: ["兔", "免", "吐"] },
-            { part1: "画蛇添", part2: "", answer: "足", options: ["足", "走", "卒"] },
-            { part1: "津津有", part2: "", answer: "味", options: ["味", "未", "胃"] },
-            { part1: "刻舟求", part2: "", answer: "剑", options: ["剑", "箭", "见"] },
-            { part1: "理直气", part2: "", answer: "壮", options: ["壮", "装", "撞"] },
-            { part1: "井底之", part2: "", answer: "蛙", options: ["蛙", "娃", "洼"] },
-            { part1: "亡羊补", part2: "", answer: "牢", options: ["牢", "捞", "劳"] },
-            { part1: "拔苗助", part2: "", answer: "长", options: ["长", "常", "场"] },
-            { part1: "对牛弹", part2: "", answer: "琴", options: ["琴", "禽", "勤"] },
-            { part1: "狐假虎", part2: "", answer: "威", options: ["威", "微", "慰"] },
-            { part1: "掩耳盗", part2: "", answer: "铃", options: ["铃", "零", "岭"] },
-            { part1: "胸有成", part2: "", answer: "竹", options: ["竹", "烛", "猪"] },
-            { part1: "破釜沉", part2: "", answer: "舟", options: ["舟", "州", "周"] },
-            { part1: "九牛一", part2: "", answer: "毛", options: ["毛", "冒", "卯"] },
-            { part1: "五颜六", part2: "", answer: "色", options: ["色", "涩", "瑟"] },
-            { part1: "走马观", part2: "", answer: "花", options: ["花", "华", "画"] },
-            { part1: "纸上谈", part2: "", answer: "兵", options: ["兵", "冰", "饼"] },
-            { part1: "自相矛", part2: "", answer: "盾", options: ["盾", "顿", "钝"] },
-            { part1: "盲人摸", part2: "", answer: "象", options: ["象", "像", "向"] },
-            { part1: "唇亡齿", part2: "", answer: "寒", options: ["寒", "汗", "喊"] },
-            { part1: "坐井观", part2: "", answer: "天", options: ["天", "田", "添"] },
-            { part1: "半途而", part2: "", answer: "废", options: ["废", "费", "肺"] },
-            { part1: "千方百", part2: "", answer: "计", options: ["计", "记", "寄"] },
-            { part1: "掩卷沉", part2: "", answer: "思", options: ["思", "丝", "撕"] },
-            { part1: "迫不", part2: "待", answer: "及", options: ["及", "急", "级"] },
-            { part1: "司空见", part2: "", answer: "惯", options: ["惯", "冠", "馆"] },
-            { part1: "依依不", part2: "", answer: "舍", options: ["舍", "折", "舌"] },
-            { part1: "坚持不", part2: "", answer: "懈", options: ["懈", "蟹", "泄"] }
+            { part1: "风和日", part2: "", answer: "丽", options: ["丽", "厉", "历", "莉"] },
+            { part1: "倾盆大", part2: "", answer: "雨", options: ["雨", "语", "羽", "宇"] },
+            { part1: "手舞足", part2: "", answer: "蹈", options: ["蹈", "稻", "倒", "导"] },
+            { part1: "狼吞虎", part2: "", answer: "咽", options: ["咽", "烟", "淹", "艳"] },
+            { part1: "兴高采", part2: "", answer: "烈", options: ["烈", "裂", "劣", "列"] },
+            { part1: "愁眉苦", part2: "", answer: "脸", options: ["脸", "检", "险", "捡"] },
+            { part1: "满头大", part2: "", answer: "汗", options: ["汗", "汉", "旱", "悍"] },
+            { part1: "目瞪口", part2: "", answer: "呆", options: ["呆", "杏", "保", "某"] },
+            { part1: "废寝忘", part2: "", answer: "食", options: ["食", "实", "石", "识"] },
+            { part1: "坚持不", part2: "", answer: "懈", options: ["懈", "蟹", "泄", "解"] },
+            { part1: "助人为", part2: "", answer: "乐", options: ["乐", "落", "勒", "热"] },
+            { part1: "拾金不", part2: "", answer: "昧", options: ["昧", "味", "妹", "抹"] },
+            { part1: "井底之", part2: "", answer: "蛙", options: ["蛙", "娃", "洼", "哇"] },
+            { part1: "刻舟求", part2: "", answer: "剑", options: ["剑", "箭", "见", "健"] },
+            { part1: "人山人", part2: "", answer: "海", options: ["海", "孩", "亥", "骇"] },
+            { part1: "门庭若", part2: "", answer: "市", options: ["市", "柿", "是", "视"] },
+            { part1: "三心二", part2: "", answer: "意", options: ["意", "义", "易", "异"] },
+            { part1: "五颜六", part2: "", answer: "色", options: ["色", "涩", "瑟", "设"] },
+            { part1: "莫名其", part2: "", answer: "妙", options: ["妙", "庙", "秒", "描"] },
+            { part1: "赞不绝", part2: "", answer: "口", options: ["口", "扣", "叩", "寇"] },
+            { part1: "鸟语花", part2: "", answer: "香", options: ["香", "乡", "厢", "相"] },
+            { part1: "滔滔不", part2: "", answer: "绝", options: ["绝", "决", "觉", "掘"] },
+            { part1: "怒气冲", part2: "", answer: "冲", options: ["冲", "充", "虫", "重"] },
+            { part1: "笑容满", part2: "", answer: "面", options: ["面", "勉", "眠", "绵"] },
+            { part1: "半途而", part2: "", answer: "废", options: ["废", "费", "肺", "吠"] },
+            { part1: "舍己为", part2: "", answer: "人", options: ["人", "认", "刃", "忍"] },
+            { part1: "掩耳盗", part2: "", answer: "铃", options: ["铃", "零", "岭", "领"] },
+            { part1: "鸦雀无", part2: "", answer: "声", options: ["声", "生", "升", "胜"] },
+            { part1: "十全十", part2: "", answer: "美", options: ["美", "每", "妹", "煤"] },
+            { part1: "满载而", part2: "", answer: "归", options: ["归", "龟", "规", "轨"] }
         ];
+
+        // The 4 new bubble background assets
+        const bubbleAssets = ['url("cloud.jpg")', 'url("flame.jpg")', 'url("moon.jpg")', 'url("star.jpg")'];
 
         let g1AvailableQuestions = [];
         let g1Time = 45;
@@ -357,7 +379,6 @@
             g1PlayArea = document.getElementById('game1-play-area');
             g1PlayArea.style.display = 'block';
             
-            // Shuffle the 30-question bank for a fresh randomized game every time
             g1AvailableQuestions = [...g1VocabBank].sort(() => Math.random() - 0.5);
             
             g1Time = 45;
@@ -377,12 +398,10 @@
         }
 
         function loadNextQuestion() {
-            // If they somehow answered all 30 in 45 seconds, reshuffle!
             if (g1AvailableQuestions.length === 0) {
                 g1AvailableQuestions = [...g1VocabBank].sort(() => Math.random() - 0.5);
             }
             
-            // Pop the next unique question from the shuffled deck
             g1CurrentQuestion = g1AvailableQuestions.pop();
             document.getElementById('g1-target-word').innerText = `${g1CurrentQuestion.part1} [?] ${g1CurrentQuestion.part2}`;
             
@@ -391,10 +410,12 @@
 
             let spawnIndex = 0;
             let shuffledOptions = [...g1CurrentQuestion.options].sort(() => Math.random() - 0.5);
+            // Shuffle the visual assets so the correct answer isn't always the same shape
+            let shuffledAssets = [...bubbleAssets].sort(() => Math.random() - 0.5); 
 
             g1SpawnInterval = setInterval(() => {
-                if(spawnIndex < shuffledOptions.length) {
-                    spawnBubble(shuffledOptions[spawnIndex]);
+                if(spawnIndex < 4) { // Now spawns all 4 options
+                    spawnBubble(shuffledOptions[spawnIndex], shuffledAssets[spawnIndex]);
                     spawnIndex++;
                 } else {
                     clearInterval(g1SpawnInterval);
@@ -408,12 +429,13 @@
             }, 700); 
         }
 
-        function spawnBubble(character) {
+        function spawnBubble(character, bgAsset) {
             let bubble = document.createElement('div');
             bubble.className = 'falling-char';
             bubble.innerText = character;
+            bubble.style.backgroundImage = bgAsset;
             
-            let randomX = Math.floor(Math.random() * 80) + 10;
+            let randomX = Math.floor(Math.random() * 70) + 10;
             bubble.style.left = `${randomX}%`;
 
             bubble.addEventListener('mousedown', function() { handleTap(this, character); });
@@ -470,7 +492,6 @@
             alert(`时间到! Time's up! You scored ${g1Score} points in Round 1.`);
             endRound(1, g1Score);
         }
-
     </script>
 </body>
 </html>
