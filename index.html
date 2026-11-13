@@ -4,24 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Commonwealth Sec Chinese Challenge</title>
-    <!-- Adding a soft, rounded font for a storybook feel -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Ah Guo Inspired Palette: Deep night blue merging into warm moonlit yellow */
         :root {
             --text-dark: #2c3e50; 
-            --white: rgba(255, 255, 255, 0.85); /* Semi-transparent like watercolor paper */
-            --btn-color: #F6C555; /* Warm glowing yellow from the painting */
+            --white: rgba(255, 255, 255, 0.85); 
+            --btn-color: #F6C555; 
             --btn-hover: #E3A72F;
-            --accent-red: #D9534F; /* Soft red for little details */
+            --accent-red: #D9534F; 
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Nunito', sans-serif;
-            /* Dreamy gradient background reflecting the sky and warm building */
-            background: linear-gradient(135deg, #0A437A 0%, #4A8BAD 50%, #F5D77F 100%);
+            font-family: Arial, "KaiTi", "楷体", STKaiti, serif;
+            /* Using the starry night image as background */
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: var(--text-dark);
             display: flex;
             flex-direction: column;
@@ -30,17 +30,25 @@
             overflow: hidden;
         }
 
+        .bg-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+
         #header {
             width: 100%;
             padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px); /* Gives a frosty/glassy dreamy effect */
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px); 
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-sizing: border-box;
-            font-weight: 700;
+            font-weight: bold;
             color: #0A437A;
         }
 
@@ -53,7 +61,6 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
-        /* Screen Management */
         .screen {
             display: none;
             flex-direction: column;
@@ -78,11 +85,10 @@
         }
 
         h1 { 
-            font-size: 2.8rem; 
+            font-size: 2.5rem; 
             margin-bottom: 10px; 
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            font-weight: 900;
+            color: #0A437A;
+            font-weight: bold;
         }
         
         h2 {
@@ -93,8 +99,8 @@
             font-size: 1.2rem; 
             line-height: 1.6; 
             margin-bottom: 30px; 
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+            color: #2c3e50;
+            font-weight: bold;
         }
 
         button {
@@ -103,13 +109,14 @@
             border: none;
             padding: 15px 40px;
             font-size: 1.3rem;
-            font-weight: 900;
+            font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 6px 15px rgba(0,0,0,0.15);
             margin: 10px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            font-family: Arial, "KaiTi", "楷体", STKaiti, serif;
         }
 
         button:hover {
@@ -118,33 +125,45 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
-        /* The glassmorphism card holding the game */
         .game-container {
             width: 100%;
             height: 450px;
-            background: var(--white);
-            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
             border-radius: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            border: 2px solid rgba(255,255,255,0.4);
+            border: 2px solid rgba(255,255,255,0.6);
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
             color: var(--text-dark);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .hero-logo {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
+    <div class="bg-overlay"></div>
 
     <div id="header">
-        <div>✨ 欢迎来到 Commonwealth Sec</div>
+        <div>✨ 欢迎来到立才中学 Commonwealth Secondary School!</div>
         <div class="score-board">积分: <span id="total-score">0</span></div>
     </div>
 
     <!-- MAIN MENU -->
     <div id="menu-screen" class="screen active">
+        <!-- Using the brighter image for the logo -->
+        <img src="logo.jpg" alt="Commonwealth Sec Chinese" class="hero-logo">
         <h1>挑战开始！</h1>
         <p>Complete 3 magical mini-games to test your Chinese vocabulary. <br>Earn points and learn new words!</p>
         <button onclick="startRound(1)">进入第一关</button>
@@ -155,7 +174,7 @@
         <div class="game-container" id="game1-area">
             <div>
                 <h2>第一关: 汉字保卫战</h2>
-                <p style="color: #4A8BAD; text-shadow: none;">Catch the correct character to complete the word! (Time: 45s)</p>
+                <p>Catch the correct character to complete the word! (Time: 45s)</p>
                 <button onclick="endRound(1, 150)">Simulate R1 Win (+150 pts)</button>
             </div>
         </div>
@@ -166,7 +185,7 @@
         <div class="game-container" id="game2-area">
              <div>
                 <h2>第二关: 贪吃蛇</h2>
-                <p style="color: #4A8BAD; text-shadow: none;">Eat the right character to form the idiom! (Time: 60s)</p>
+                <p>Eat the right character to form the idiom! (Time: 60s)</p>
                 <button onclick="endRound(2, 200)">Simulate R2 Win (+200 pts)</button>
             </div>
         </div>
@@ -177,7 +196,7 @@
         <div class="game-container" id="game3-area">
             <div>
                 <h2>第三关: 记忆大考验</h2>
-                <p style="color: #4A8BAD; text-shadow: none;">Match the cards and read the sentences carefully!</p>
+                <p>Match the cards and read the sentences carefully!</p>
                 <button onclick="finishGame(300)">Simulate R3 Win (+300 pts)</button>
             </div>
         </div>
