@@ -4,45 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Commonwealth Sec Chinese Challenge</title>
+    <!-- Adding a soft, rounded font for a storybook feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Minimalist, soft warm color palette */
+        /* Ah Guo Inspired Palette: Deep night blue merging into warm moonlit yellow */
         :root {
-            --bg-color: #f4f9f4; /* Soft sage green */
-            --primary: #7ca982; /* Muted green */
-            --secondary: #a0c4ff; /* Soft blue */
-            --accent: #ffcbf2; /* Soft pink */
-            --text-dark: #4a4e69; /* Deep purple/grey for readability */
-            --white: #ffffff;
+            --text-dark: #2c3e50; 
+            --white: rgba(255, 255, 255, 0.85); /* Semi-transparent like watercolor paper */
+            --btn-color: #F6C555; /* Warm glowing yellow from the painting */
+            --btn-hover: #E3A72F;
+            --accent-red: #D9534F; /* Soft red for little details */
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Nunito', sans-serif;
+            /* Dreamy gradient background reflecting the sky and warm building */
+            background: linear-gradient(135deg, #0A437A 0%, #4A8BAD 50%, #F5D77F 100%);
             color: var(--text-dark);
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             overflow: hidden;
         }
 
         #header {
             width: 100%;
             padding: 15px 20px;
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px); /* Gives a frosty/glassy dreamy effect */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-sizing: border-box;
+            font-weight: 700;
+            color: #0A437A;
         }
 
         .score-board {
             font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--primary);
+            background: var(--btn-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
         /* Screen Management */
@@ -53,7 +61,7 @@
             justify-content: center;
             flex-grow: 1;
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
             padding: 20px;
             box-sizing: border-box;
             text-align: center;
@@ -61,94 +69,129 @@
 
         .screen.active {
             display: flex;
+            animation: fadeIn 0.8s ease-in-out;
         }
 
-        h1 { font-size: 2.5rem; margin-bottom: 10px; color: var(--primary); }
-        p { font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { 
+            font-size: 2.8rem; 
+            margin-bottom: 10px; 
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 900;
+        }
+        
+        h2 {
+            color: #0A437A;
+        }
+
+        p { 
+            font-size: 1.2rem; 
+            line-height: 1.6; 
+            margin-bottom: 30px; 
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+        }
 
         button {
-            background-color: var(--secondary);
-            color: var(--text-dark);
+            background-color: var(--btn-color);
+            color: #fff;
             border: none;
             padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 30px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
             margin: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
         button:hover {
-            transform: translateY(-2px);
-            background-color: var(--accent);
+            transform: translateY(-3px);
+            background-color: var(--btn-hover);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
+        /* The glassmorphism card holding the game */
         .game-container {
             width: 100%;
-            height: 400px;
-            background-color: var(--white);
-            border-radius: 20px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+            height: 450px;
+            background: var(--white);
+            backdrop-filter: blur(12px);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 2px solid rgba(255,255,255,0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
+            color: var(--text-dark);
         }
     </style>
 </head>
 <body>
 
     <div id="header">
-        <div>Commonwealth Sec Chinese</div>
-        <div class="score-board">Total Points: <span id="total-score">0</span></div>
+        <div>✨ 欢迎来到 Commonwealth Sec</div>
+        <div class="score-board">积分: <span id="total-score">0</span></div>
     </div>
 
     <!-- MAIN MENU -->
     <div id="menu-screen" class="screen active">
         <h1>挑战开始！</h1>
-        <p>Complete 3 mini-games to test your Chinese vocabulary. <br>Earn points and learn new words along the way!</p>
-        <button onclick="startRound(1)">Start Round 1</button>
+        <p>Complete 3 magical mini-games to test your Chinese vocabulary. <br>Earn points and learn new words!</p>
+        <button onclick="startRound(1)">进入第一关</button>
     </div>
 
     <!-- ROUND 1: FALLING WORDS -->
     <div id="round1-screen" class="screen">
-        <h2>Round 1: 汉字保卫战</h2>
-        <p>Catch the correct character to complete the word! (Time: 45s)</p>
         <div class="game-container" id="game1-area">
-            [Falling Words Game Engine will go here]
+            <div>
+                <h2>第一关: 汉字保卫战</h2>
+                <p style="color: #4A8BAD; text-shadow: none;">Catch the correct character to complete the word! (Time: 45s)</p>
+                <button onclick="endRound(1, 150)">Simulate R1 Win (+150 pts)</button>
+            </div>
         </div>
-        <button onclick="endRound(1, 150)">Simulate R1 Win (+150 pts)</button>
     </div>
 
     <!-- ROUND 2: SNAKE -->
     <div id="round2-screen" class="screen">
-        <h2>Round 2: 贪吃蛇</h2>
-        <p>Eat the right character to form the idiom! (Time: 60s)</p>
         <div class="game-container" id="game2-area">
-            [Snake Game Engine will go here]
+             <div>
+                <h2>第二关: 贪吃蛇</h2>
+                <p style="color: #4A8BAD; text-shadow: none;">Eat the right character to form the idiom! (Time: 60s)</p>
+                <button onclick="endRound(2, 200)">Simulate R2 Win (+200 pts)</button>
+            </div>
         </div>
-        <button onclick="endRound(2, 200)">Simulate R2 Win (+200 pts)</button>
     </div>
 
-    <!-- ROUND 3: MEMORY & 造句 -->
+    <!-- ROUND 3: MEMORY -->
     <div id="round3-screen" class="screen">
-        <h2>Round 3: 记忆大考验</h2>
-        <p>Match the cards. Read the meanings and sentences carefully!</p>
         <div class="game-container" id="game3-area">
-            [Memory Game Engine will go here]
+            <div>
+                <h2>第三关: 记忆大考验</h2>
+                <p style="color: #4A8BAD; text-shadow: none;">Match the cards and read the sentences carefully!</p>
+                <button onclick="finishGame(300)">Simulate R3 Win (+300 pts)</button>
+            </div>
         </div>
-        <button onclick="finishGame(300)">Simulate R3 Win (+300 pts)</button>
     </div>
 
     <!-- FINAL SCORE SCREEN -->
     <div id="end-screen" class="screen">
-        <h1>太棒了!</h1>
+        <h1>太棒了! 🎉</h1>
         <p>You have completed the challenge.</p>
-        <h2 style="font-size: 3rem; color: var(--accent);">Final Score: <span id="final-score">0</span></h2>
-        <button onclick="location.reload()">Play Again</button>
+        <div style="background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <h2 style="font-size: 2.5rem; margin: 0; color: #D9534F;">总分: <span id="final-score">0</span></h2>
+        </div>
+        <br>
+        <button onclick="location.reload()">再玩一次 (Play Again)</button>
     </div>
 
     <script>
@@ -159,25 +202,19 @@
         }
 
         function switchScreen(screenId) {
-            // Hide all screens
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
             });
-            // Show target screen
             document.getElementById(screenId).classList.add('active');
         }
 
         function startRound(roundNumber) {
             switchScreen(`round${roundNumber}-screen`);
-            // In the future, this is where we will trigger the specific game timer and animations
         }
 
         function endRound(currentRound, pointsEarned) {
             totalScore += pointsEarned;
             updateScoreBoard();
-            
-            // Move to next round menu or start next round directly
-            alert(`Round ${currentRound} Complete! You earned ${pointsEarned} points.`);
             startRound(currentRound + 1);
         }
 
